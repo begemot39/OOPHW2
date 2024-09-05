@@ -1,4 +1,4 @@
-public class RadioServices {
+public class Radio {
 
     private int currentStation = 0;
     private int currentSoundLevel = 0;

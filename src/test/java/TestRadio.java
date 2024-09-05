@@ -1,13 +1,13 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestRadioServices {
+public class TestRadio {
 
     // Тесты станций
 
     @Test // Получить текущую станцию без дополнительных настроек.
     public void testGetCurrentStation() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         int expected = 0;
         int actual = radio.getCurrentStation();
@@ -17,7 +17,7 @@ public class TestRadioServices {
 
     @Test// Уменьшить станцию на 1, при начальном значении станции 0.
     public void testSetPrevStationBelowZero() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.setPrevStation();
         int expected = 9;
@@ -28,7 +28,7 @@ public class TestRadioServices {
 
     @Test// Установить станцию, не выходя за максимальные или минимальные значения.
     public void testSetStation() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.setStation(2);
         int expected = 2;
@@ -37,9 +37,20 @@ public class TestRadioServices {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test// Установить станцию, не выходя за максимальные или минимальные значения.
+    public void testSetStationOvexMax() {
+        Radio radio = new Radio();
+
+        radio.setStation(11);
+        int expected = 0;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
     @Test // Увеличить номер станции на 1, при начальном максимальном значении станции в 9.
-    public void testSetStationOverMax() {
-        RadioServices radio = new RadioServices();
+    public void testSetStationOverMaxByOne() {
+        Radio radio = new Radio();
 
         radio.setStation(9);
         radio.setNextStation();
@@ -51,7 +62,7 @@ public class TestRadioServices {
 
     @Test// Установить отрицательное значение номера станции.
     public void testSetStationBelowMin() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.setStation(-10);
         int expected = 0;
@@ -62,7 +73,7 @@ public class TestRadioServices {
 
     @Test// Уменьшить станцию на 1, не выходя за пределы нуля или 9.
     public void testSetPrevStation() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.setStation(3);
         radio.setPrevStation();
@@ -74,7 +85,7 @@ public class TestRadioServices {
 
     @Test // Увеличить станцию на 1, не выходя за пределы максимального значения в 9.
     public void testSetNextStation() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.setStation(5);
         radio.setNextStation();
@@ -89,7 +100,7 @@ public class TestRadioServices {
 
     @Test // Получить текущий уровень звука.
     public void testCurrentSound() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         int expected = 0;
         int actual = radio.getCurrentSound();
@@ -99,7 +110,7 @@ public class TestRadioServices {
 
     @Test // Уменьшить звук на 1, не ниже минимума( 0 ).
     public void testDownSoundNotBelowMin() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.setSoundLevel(1);
         radio.turnDownSound();
@@ -111,7 +122,7 @@ public class TestRadioServices {
 
     @Test // Уменьшить звук на 1, ниже минимума.
     public void testDownSoundBelowMin() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.turnDownSound();
         int expected = 0;
@@ -122,7 +133,7 @@ public class TestRadioServices {
 
     @Test // Увеличить звук на 1, при начальном значении звука ноль.
     public void testUpSoundNotHigherMaxStartZero() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.turnUpSound();
         int expected = 1;
@@ -133,7 +144,7 @@ public class TestRadioServices {
 
     @Test // Увеличить звук на 1, при начальном значении звука сто.
     public void testUpSoundHigherMaxStart100() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.setSoundLevel(100);
         radio.turnUpSound();
@@ -145,7 +156,7 @@ public class TestRadioServices {
 
     @Test // Установить произвольный уровень звука не выше максимума( 100 )
     public void testSetSoundNotOverMax() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.setSoundLevel(100);
         int expected = 100;
@@ -156,7 +167,7 @@ public class TestRadioServices {
 
     @Test // Установить произвольный уровень звука выше максимума( 100 )
     public void testSetSoundOverMax() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.setSoundLevel(101);
         int expected = 100;
@@ -167,7 +178,7 @@ public class TestRadioServices {
 
     @Test // Установить произвольный уровень звука ниже минимума( 0 )
     public void testSetSoundSubZero() {
-        RadioServices radio = new RadioServices();
+        Radio radio = new Radio();
 
         radio.setSoundLevel(-100);
         int expected = 0;
