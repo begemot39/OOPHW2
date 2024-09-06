@@ -5,6 +5,66 @@ public class TestRadio {
 
     // Тесты станций
 
+    @Test
+    public void getStationQuantity() { // Получить количество станций, без изменения их пользователем.
+        Radio radio = new Radio();
+
+        int exp = 10;
+        int act = radio.getStationQuantity();
+
+        Assertions.assertEquals( exp, act );
+    }
+
+    @Test
+    public void testUserSetStation() { // Установить новое валидное значение количества станций.
+        Radio rad = new Radio( 100 );
+
+        int exp = 100;
+        int act = rad.getStationQuantity();
+
+        Assertions.assertEquals( exp, act );
+    }
+
+    @Test
+    public void testUserSetStationMaxNumber() { // Максимальный номер станции при новом валидном значении.
+        Radio rad = new Radio( 100 );
+
+        int exp = 99;
+        int act = rad.getMaxStationNumber();
+
+        Assertions.assertEquals( exp, act );
+    }
+
+    @Test
+    public void testGetMinStationNumberDefault() { // Получить минимальный номер станции, при количестве станций по умолчанию.
+        Radio rad = new Radio();
+
+        int exp = 0;
+        int act = rad.getMinStationNumber();
+
+        Assertions.assertEquals( exp, act );
+    }
+
+    @Test
+    public void testGetMinStationNumberUser() { // Получить минимальный номер станции, при количестве станций заданным пользователем.
+        Radio rad = new Radio( 100 );
+
+        int exp = 0;
+        int act = rad.getMinStationNumber();
+
+        Assertions.assertEquals( exp, act );
+    }
+
+    @Test
+    public void testUserSetStationBelowZero() { // Установить новое невалидное значение количества станций.
+        Radio rad = new Radio( -100 );
+
+        int exp = 0;
+        int act = rad.getStationQuantity();
+
+        Assertions.assertEquals( exp, act );
+    }
+
     @Test // Получить текущую станцию без дополнительных настроек.
     public void testGetCurrentStation() {
         Radio radio = new Radio();
@@ -37,11 +97,11 @@ public class TestRadio {
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test// Установить станцию, не выходя за максимальные или минимальные значения.
+    @Test// Установить станцию, выходя за максимальные значения.
     public void testSetStationOvexMax() {
         Radio radio = new Radio();
 
-        radio.setStation(11);
+        radio.setStation(10);
         int expected = 0;
         int actual = radio.getCurrentStation();
 
@@ -94,6 +154,7 @@ public class TestRadio {
 
         Assertions.assertEquals(expected, actual);
     }
+
 
 
     // Тесты звука
