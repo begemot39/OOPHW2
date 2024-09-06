@@ -1,34 +1,71 @@
 public class Radio {
 
-    private int currentStation = 0;
-    private int currentSoundLevel = 0;
+    // Начальные установки для станций
+    private int stationQuantity;
+    private int minStationNumber;
+    private int maxStationNumber;
+    private int currentStation = minStationNumber;
+    // Начальные установки для звука
+    private int minSoundLevel;
+    private int maxSoundLevel = 100;
+    private int currentSoundLevel = minSoundLevel;
+
+    // Конструкторы
+
+    public Radio() {
+        this.stationQuantity = 10;
+        this.maxStationNumber = stationQuantity - 1;
+    }
+
+    public Radio( int userStationQuantity ) {
+        if ( userStationQuantity > 0 ) {
+            this.stationQuantity = userStationQuantity;
+        } else {
+            return;
+        }
+
+        this.maxStationNumber = stationQuantity - 1;
+    }
+
 
     // Действия со станциями
 
-    public int getCurrentStation() {
+    public int getStationQuantity() { // Получить количество станций.
+        return stationQuantity;
+    }
+
+    public int getCurrentStation() { // Получить номер текущей станции.
         return currentStation;
     }
 
-    public void setNextStation() {
+    public void setNextStation() { // Переключиться на следующую станцию.
         currentStation++;
-        if (currentStation > 9) {
-            currentStation = 0;
+        if (currentStation > maxStationNumber) {
+            currentStation = minStationNumber;
         }
     }
 
-    public void setPrevStation() {
+    public void setPrevStation() { // Переключиться на предыдущую станцию.
         currentStation--;
-        if (currentStation < 0) {
-            currentStation = 9;
+        if (currentStation < minStationNumber) {
+            currentStation = maxStationNumber;
         }
     }
 
-    public void setStation(int stationNumber) {
-        if (stationNumber > 9 || stationNumber < 0) {
+    public void setStation(int userStationNumber) { // Установить произвольную станцию в пределах количества станций.
+        if (userStationNumber > maxStationNumber || userStationNumber < minStationNumber) {
             return;
         } else {
-            currentStation = stationNumber;
+            currentStation = userStationNumber;
         }
+    }
+
+    public int getMinStationNumber() {
+        return minStationNumber;
+    }
+
+    public int getMaxStationNumber() {
+        return maxStationNumber;
     }
 
     // Действия со звуком
@@ -39,27 +76,27 @@ public class Radio {
 
     public void turnUpSound() {
         currentSoundLevel++;
-        if (currentSoundLevel > 100) {
+        if (currentSoundLevel > maxSoundLevel) {
             currentSoundLevel = 100;
         }
     }
 
     public void turnDownSound() {
         currentSoundLevel--;
-        if (currentSoundLevel < 0) {
+        if (currentSoundLevel < minSoundLevel) {
             currentSoundLevel = 0;
         }
     }
 
     public void setSoundLevel(int userSoundValue) {
         if (userSoundValue >= 0) {
-            if (getCurrentSound() + userSoundValue > 100) {
-                currentSoundLevel = 100;
+            if (getCurrentSound() + userSoundValue > maxSoundLevel) {
+                currentSoundLevel = maxSoundLevel;
             } else {
                 currentSoundLevel += userSoundValue;
             }
         } else {
-            currentSoundLevel = 0;
+            currentSoundLevel = minSoundLevel;
         }
     }
 }
